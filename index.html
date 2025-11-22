@@ -383,6 +383,7 @@
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
+            cursor: pointer;
         }
 
         .btn-header-player:hover {
@@ -419,16 +420,6 @@
     </style>
 </head>
 <body class="antialiased">
-
-    <script>
-        const LOGO_BAND_URL = "https://upload.wikimedia.org/wikipedia/commons/f/f0/Band_logo_2018.png";
-        const AIR_FRYER_URL = "https://gazin-images.gazin.com.br/FvUHVP2VyngzEi0HUgXjMkudEHg=/1920x/filters:format(webp):quality(75)/https://gazin-marketplace.s3.amazonaws.com/midias/imagens/2024/11/fritadeira-eletrica-air-fryer-mondial-pratic-af-36-36l-1500w-162411030410.jpg";
-        
-        // COLOQUE AQUI O ID DO SEU VÍDEO DO YOUTUBE
-        // Exemplo: se o link for https://www.youtube.com/watch?v=ABC123XYZ
-        // então coloque apenas: ABC123XYZ
-        const YOUTUBE_VIDEO_ID = "SEU_VIDEO_ID_AQUI"; // <-- TROQUE AQUI PELO ID DA SUA LIVE
-    </script>
 
     <!-- Cabeçalho -->
     <header class="bg-white shadow-lg sticky top-0 z-50 transition-all duration-300">
@@ -500,7 +491,7 @@
                 <div class="live-video-container" id="live-player">
                     <iframe
                         id="live-iframe"
-                        src=""
+                        src="https://www.youtube.com/embed/CtXq3b0ta4M"
                         title="Transmissão ao Vivo SIPAT 2025"
                         frameborder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -512,10 +503,9 @@
             <!-- BOTÕES DE AÇÃO -->
             <div class="live-actions animate-fadeInUp" style="animation-delay: 0.4s;">
                 <a
-                    id="btn-open-youtube"
-                    href=""
+                    href="https://www.youtube.com/watch?v=CtXq3b0ta4M"
                     target="_blank"
-                    rel="noopener"
+                    rel="noopener noreferrer"
                     class="btn btn-live-primary">
                     <i class="fab fa-youtube"></i> Abrir no YouTube
                 </a>
@@ -567,7 +557,7 @@
                         </li>
                         <li class="flex items-center font-medium text-base bg-gray-50 p-3 rounded-lg hover:bg-gray-100 transition">
                             <i class="fas fa-hamburger text-yellow-500 text-xl mr-3 w-6 text-center"></i> 
-                            <span>Vouchers R$200,00 GIOVANETTI</span>
+                            <span>Vouchers R$200 GIOVANETTI</span>
                         </li>
                         <li class="flex items-center font-medium text-base bg-gray-50 p-3 rounded-lg hover:bg-gray-100 transition">
                             <i class="fas fa-water text-yellow-500 text-xl mr-3 w-6 text-center"></i> 
@@ -782,7 +772,7 @@
             <div class="mb-4">
                 <i class="fas fa-shield-alt text-4xl text-green-400 mb-3 inline-block"></i>
             </div>
-            <p class="text-lg font-semibold">&copy; 2025 SIPAT Band Campinas</p>
+            <p class="text-lg font-semibold">© 2025 SIPAT Band Campinas</p>
             <p class="text-sm mt-2 text-gray-400">Realização: CIPA e Segurança do Trabalho</p>
             <p class="text-lg mt-4 text-yellow-400 font-bold">
                 <i class="fas fa-heart text-red-500 mr-2"></i>
@@ -800,21 +790,6 @@
                 player.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }
         }
-
-        // Configurar os links do YouTube quando a página carregar
-        window.addEventListener('DOMContentLoaded', function() {
-            const videoId = YOUTUBE_VIDEO_ID;
-            if (!videoId || videoId === "CtXq3b0ta4M") return;
-
-            const embedUrl = `https://www.youtube.com/embed/${videoId}`;
-            const watchUrl = `https://www.youtube.com/watch?v=${videoId}`;
-            
-            // Atualizar o iframe
-            document.getElementById('live-iframe').src = embedUrl;
-            
-            // Atualizar o botão de abrir no YouTube
-            document.getElementById('btn-open-youtube').href = watchUrl;
-        });
     </script>
 
 </body>
