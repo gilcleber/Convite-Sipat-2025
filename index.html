@@ -231,7 +231,7 @@
             display: block;
             padding-top: 56.25%; /* 16:9 */
         }
-        .live-video-container #player {
+        .live-video-container iframe {
             position: absolute;
             inset: 0;
             width: 100%;
@@ -322,14 +322,10 @@
     <!-- ============================================ -->
     <script>
         // 🔴 TROQUE AQUI PELO ID DO SEU VÍDEO OU LIVE
-        // AGORA: Vídeo em loop aleatório (7EJ-iJNOAvI)
+        // AGORA: Vídeo em loop (7EJ-iJNOAvI)
         // QUANDO FOR LIVE: Troque pelo ID da live
         
         const YOUTUBE_VIDEO_ID = '7EJ-iJNOAvI'; // <-- TROQUE AQUI
-        
-        // ⏱️ DURAÇÃO DO SEU VÍDEO EM SEGUNDOS
-        // Seu vídeo tem quase 2 horas = 7200 segundos (ajuste se necessário)
-        const VIDEO_DURATION_SECONDS = 7200; // <-- AJUSTE A DURAÇÃO AQUI
     </script>
     <!-- ============================================ -->
 
@@ -398,15 +394,22 @@
             </div>
 
             <div class="live-video-wrapper animate-fadeInUp" style="animation-delay: 0.3s;">
-                <div class="live-video-container" id="live-player-wrapper">
-                    <div id="player"></div>
+                <div class="live-video-container" id="live-player">
+                    <iframe
+                        id="live-iframe"
+                        src=""
+                        title="SIPAT 2025 - Vídeos Educativos"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowfullscreen>
+                    </iframe>
                 </div>
             </div>
 
             <div class="live-actions animate-fadeInUp" style="animation-delay: 0.4s;">
                 <a
                     id="btn-open-youtube"
-                    href="https://www.youtube.com/watch?v=7EJ-iJNOAvI"
+                    href="#"
                     target="_blank"
                     rel="noopener noreferrer"
                     class="btn btn-live-primary">
@@ -683,81 +686,37 @@
         </div>
     </footer>
 
-    <!-- YouTube IFrame API -->
-    <script src="https://www.youtube.com/iframe_api"></script>
-    
     <!-- Scripts -->
     <script>
         // Rolar até o player
         function scrollToLivePlayer() {
-            const player = document.getElementById('live-player-wrapper');
+            const player = document.getElementById('live-player');
             if (player) {
                 player.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }
         }
 
-        // Variável global do player
-        let ytPlayer;
-
-        // Função chamada automaticamente pela API do YouTube
-        function onYouTubeIframeAPIReady() {
+        // Configurar player e badge automaticamente
+        window.addEventListener('DOMContentLoaded', function () {
             const videoId = YOUTUBE_VIDEO_ID.trim();
-            const badge = document.getElementById('live-status-badge');
-            const btnYT = document.getElementById('btn-open-youtube');
+            const iframe  = document.getElementById('live-iframe');
+            const badge   = document.getElementById('live-status-badge');
+            const btnYT   = document.getElementById('btn-open-youtube');
 
             if (videoId && videoId !== '') {
-                // 🎲 GERA UM TEMPO ALEATÓRIO
-                const randomStart = Math.floor(Math.random() * VIDEO_DURATION_SECONDS);
-                
-                // 🎬 CRIA O PLAYER COM A API (100% LIMPO!)
-                ytPlayer = new YT.Player('player', {
-                    videoId: videoId,
-                    playerVars: {
-                        'autoplay': 1,              // ✅ AUTOPLAY ATIVADO
-                        'mute': 1,                  // ✅ SOM MUTADO (necessário pro autoplay)
-                        'loop': 1,
-                        'playlist': videoId,
-                        'start': randomStart,
-                        'controls': 0,              // ❌ SEM CONTROLES
-                        'modestbranding': 1,        // ❌ SEM LOGO YOUTUBE
-                        'rel': 0,                   // ❌ SEM VÍDEOS RELACIONADOS
-                        'showinfo': 0,              // ❌ SEM TÍTULO
-                        'iv_load_policy': 3,        // ❌ SEM ANOTAÇÕES
-                        'disablekb': 1,             // ❌ SEM ATALHOS DE TECLADO
-                        'fs': 0,                    // ❌ SEM BOTÃO FULLSCREEN
-                        'playsinline': 1
-                    },
-                    events: {
-                        'onReady': onPlayerReady,
-                        'onStateChange': onPlayerStateChange
-                    }
-                });
-
+                // TEM VÍDEO → Configura com LOOP
+                iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}`;
                 badge.textContent = '🎬 Vídeos educativos em reprodução contínua';
                 
-                // ✅ CORRIGIDO: Link direto pro YouTube
                 btnYT.href = `https://www.youtube.com/watch?v=${videoId}`;
                 btnYT.style.display = 'inline-flex';
             } else {
+                // NÃO TEM VÍDEO → Mostra "Ao vivo em breve"
+                iframe.src = '';
                 badge.textContent = '🔴 Ao vivo em breve – aguarde o horário da transmissão.';
                 btnYT.style.display = 'none';
             }
-        }
-
-        // Quando o player estiver pronto
-        function onPlayerReady(event) {
-            // ✅ FORÇA O PLAY QUANDO CARREGAR
-            event.target.playVideo();
-        }
-
-        // Quando o estado do player mudar (para garantir o loop)
-        function onPlayerStateChange(event) {
-            if (event.data === YT.PlayerState.ENDED) {
-                const randomStart = Math.floor(Math.random() * VIDEO_DURATION_SECONDS);
-                ytPlayer.seekTo(randomStart);
-                ytPlayer.playVideo();
-            }
-        }
+        });
     </script>
 
 </body>
