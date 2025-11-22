@@ -237,6 +237,143 @@
             0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
             100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
         }
+
+        /* ESTILOS DA SEÇÃO AO VIVO */
+        .live-section {
+            padding: 60px 20px;
+            background: linear-gradient(135deg, #050816 0%, #0f172a 100%);
+            color: #f4f4f5;
+        }
+
+        .live-section .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .live-section h2 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: #e5e7eb;
+        }
+
+        .live-subtitle {
+            font-size: 0.98rem;
+            color: #d1d5db;
+            margin-bottom: 20px;
+        }
+
+        .live-status-badge {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 999px;
+            background: rgba(220, 38, 38, 0.12);
+            color: #fecaca;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 24px;
+            border: 1px solid rgba(248, 113, 113, 0.4);
+        }
+
+        /* RESPONSIVO – VÍDEO 16:9 */
+        .live-video-wrapper {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .live-video-container {
+            position: relative;
+            width: 100%;
+            max-width: 900px;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 18px 45px rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(148, 163, 184, 0.3);
+            background: radial-gradient(circle at top, #1f2937, #020617 60%);
+        }
+
+        .live-video-container::before {
+            content: "";
+            display: block;
+            padding-top: 56.25%; /* 16:9 */
+        }
+
+        .live-video-container iframe {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* BOTÕES */
+        .live-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+
+        .btn {
+            padding: 10px 18px;
+            border-radius: 999px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-live-primary {
+            background: linear-gradient(135deg, #22c55e, #4ade80);
+            color: #052e16;
+            box-shadow: 0 10px 25px rgba(34, 197, 94, 0.35);
+        }
+
+        .btn-live-primary:hover {
+            transform: translateY(-1px) scale(1.01);
+            box-shadow: 0 12px 28px rgba(34, 197, 94, 0.5);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: #e5e7eb;
+            border: 1px solid rgba(148, 163, 184, 0.7);
+        }
+
+        .btn-outline:hover {
+            background: rgba(15, 23, 42, 0.8);
+        }
+
+        /* NOTA FINAL */
+        .live-note {
+            font-size: 0.85rem;
+            color: #9ca3af;
+            margin-top: 8px;
+        }
+
+        /* MOBILE */
+        @media (max-width: 640px) {
+            .live-section {
+                padding: 40px 16px;
+            }
+
+            .live-section h2 {
+                font-size: 1.4rem;
+            }
+
+            .live-subtitle {
+                font-size: 0.9rem;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
     </style>
 </head>
 <body class="antialiased">
@@ -245,6 +382,11 @@
         const LOGO_BAND_URL = "https://upload.wikimedia.org/wikipedia/commons/f/f0/Band_logo_2018.png";
         const AIR_FRYER_URL = "https://gazin-images.gazin.com.br/FvUHVP2VyngzEi0HUgXjMkudEHg=/1920x/filters:format(webp):quality(75)/https://gazin-marketplace.s3.amazonaws.com/midias/imagens/2024/11/fritadeira-eletrica-air-fryer-mondial-pratic-af-36-36l-1500w-162411030410.jpg";
         const LIVE_STREAM_URL = "https://link-da-transmissao-ao-vivo-aqui.com/sipat";
+        
+        // COLOQUE AQUI O ID DO SEU VÍDEO DO YOUTUBE
+        // Exemplo: se o link for https://www.youtube.com/watch?v=ABC123XYZ
+        // então coloque apenas: ABC123XYZ
+        const YOUTUBE_VIDEO_ID = "SEU_VIDEO_ID_AQUI";
     </script>
 
     <!-- Cabeçalho -->
@@ -315,6 +457,55 @@
         <script>
             document.getElementById('live-link').href = LIVE_STREAM_URL;
         </script>
+    </section>
+
+    <!-- SEÇÃO TRANSMISSÃO AO VIVO EMBUTIDA -->
+    <section id="ao-vivo" class="live-section">
+        <div class="container">
+            <h2>📺 Transmissão ao Vivo – SIPAT 2025</h2>
+            <p class="live-subtitle">
+                Acompanhe a SIPAT 2025 ao vivo diretamente nesta página!  
+                Clique em <strong>Play</strong> no player abaixo no horário da transmissão.
+            </p>
+
+            <!-- ALERTA DE STATUS DA LIVE -->
+            <div class="live-status-badge" id="live-status-badge">
+                🔴 Ao vivo em breve – aguarde o horário da transmissão.
+            </div>
+
+            <!-- PLAYER DO YOUTUBE EMBUTIDO -->
+            <div class="live-video-wrapper">
+                <div class="live-video-container">
+                    <iframe
+                        id="live-iframe"
+                        src=""
+                        title="Transmissão ao Vivo SIPAT 2025"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowfullscreen>
+                    </iframe>
+                </div>
+            </div>
+
+            <!-- BOTÕES DE AÇÃO -->
+            <div class="live-actions">
+                <a
+                    id="btn-open-youtube"
+                    href=""
+                    target="_blank"
+                    rel="noopener"
+                    class="btn btn-outline">
+                    <i class="fab fa-youtube mr-2"></i>Abrir transmissão no YouTube
+                </a>
+                <button type="button" class="btn btn-live-primary" onclick="scrollToLive()">
+                    <i class="fas fa-play-circle mr-2"></i>Ir para o player
+                </button>
+            </div>
+
+            <p class="live-note">
+                💡 Dica: use fones de ouvido e, se possível, conecte-se a uma rede Wi‑Fi para melhor qualidade de áudio e vídeo.
+            </p>
+        </div>
     </section>
 
     <!-- Prêmios -->
@@ -571,7 +762,7 @@
             <div class="mb-4">
                 <i class="fas fa-shield-alt text-4xl text-green-400 mb-3 inline-block"></i>
             </div>
-            <p class="text-lg font-semibold">&copy; 2025 SIPAT Band Campinas</p>
+            <p class="text-lg font-semibold">© 2025 SIPAT Band Campinas</p>
             <p class="text-sm mt-2 text-gray-400">Realização: CIPA e Segurança do Trabalho</p>
             <p class="text-lg mt-4 text-yellow-400 font-bold">
                 <i class="fas fa-heart text-red-500 mr-2"></i>
@@ -579,6 +770,30 @@
             </p>
         </div>
     </footer>
+
+    <!-- SCRIPTS -->
+    <script>
+        // Função para rolar suavemente até o player
+        function scrollToLive() {
+            const section = document.getElementById('ao-vivo');
+            if (section) {
+                section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        // Configurar os links do YouTube quando a página carregar
+        window.addEventListener('DOMContentLoaded', function() {
+            const videoId = YOUTUBE_VIDEO_ID;
+            const embedUrl = `https://www.youtube.com/embed/${videoId}`;
+            const watchUrl = `https://www.youtube.com/watch?v=${videoId}`;
+            
+            // Atualizar o iframe
+            document.getElementById('live-iframe').src = embedUrl;
+            
+            // Atualizar o botão de abrir no YouTube
+            document.getElementById('btn-open-youtube').href = watchUrl;
+        });
+    </script>
 
 </body>
 </html>
