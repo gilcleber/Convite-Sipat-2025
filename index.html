@@ -231,7 +231,7 @@
             display: block;
             padding-top: 56.25%; /* 16:9 */
         }
-        .live-video-container iframe {
+        .live-video-container #player {
             position: absolute;
             inset: 0;
             width: 100%;
@@ -398,15 +398,8 @@
             </div>
 
             <div class="live-video-wrapper animate-fadeInUp" style="animation-delay: 0.3s;">
-                <div class="live-video-container" id="live-player">
-                    <iframe
-                        id="live-iframe"
-                        src=""
-                        title="SIPAT 2025 - Vídeos Educativos"
-                        frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        allowfullscreen>
-                    </iframe>
+                <div class="live-video-container" id="live-player-wrapper">
+                    <div id="player"></div>
                 </div>
             </div>
 
@@ -690,40 +683,78 @@
         </div>
     </footer>
 
+    <!-- YouTube IFrame API -->
+    <script src="https://www.youtube.com/iframe_api"></script>
+    
     <!-- Scripts -->
     <script>
         // Rolar até o player
         function scrollToLivePlayer() {
-            const player = document.getElementById('live-player');
+            const player = document.getElementById('live-player-wrapper');
             if (player) {
                 player.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }
         }
 
-        // Configurar player e badge automaticamente
-        window.addEventListener('DOMContentLoaded', function () {
+        // Variável global do player
+        let ytPlayer;
+
+        // Função chamada automaticamente pela API do YouTube
+        function onYouTubeIframeAPIReady() {
             const videoId = YOUTUBE_VIDEO_ID.trim();
-            const iframe  = document.getElementById('live-iframe');
-            const badge   = document.getElementById('live-status-badge');
-            const btnYT   = document.getElementById('btn-open-youtube');
+            const badge = document.getElementById('live-status-badge');
+            const btnYT = document.getElementById('btn-open-youtube');
 
             if (videoId && videoId !== '') {
-                // 🎲 GERA UM TEMPO ALEATÓRIO ENTRE 0 E A DURAÇÃO DO VÍDEO
+                // 🎲 GERA UM TEMPO ALEATÓRIO
                 const randomStart = Math.floor(Math.random() * VIDEO_DURATION_SECONDS);
                 
-                // 🎬 MODO CINEMA: Esconde título e controles aparecem só quando clica
-                iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}&start=${randomStart}&controls=1&modestbranding=1&rel=0&showinfo=0&iv_load_policy=3`;
+                // 🎬 CRIA O PLAYER COM A API (100% LIMPO!)
+                ytPlayer = new YT.Player('player', {
+                    videoId: videoId,
+                    playerVars: {
+                        'autoplay': 1,
+                        'mute': 1,
+                        'loop': 1,
+                        'playlist': videoId,
+                        'start': randomStart,
+                        'controls': 0,           // ❌ SEM CONTROLES
+                        'modestbranding': 1,     // ❌ SEM LOGO YOUTUBE
+                        'rel': 0,                // ❌ SEM VÍDEOS RELACIONADOS
+                        'showinfo': 0,           // ❌ SEM TÍTULO
+                        'iv_load_policy': 3,     // ❌ SEM ANOTAÇÕES
+                        'disablekb': 1,          // ❌ SEM ATALHOS DE TECLADO
+                        'fs': 0,                 // ❌ SEM BOTÃO FULLSCREEN
+                        'playsinline': 1
+                    },
+                    events: {
+                        'onReady': onPlayerReady,
+                        'onStateChange': onPlayerStateChange
+                    }
+                });
+
                 badge.textContent = '🎬 Vídeos educativos em reprodução contínua';
-                
                 btnYT.href = `https://www.youtube.com/watch?v=${videoId}`;
                 btnYT.style.display = 'inline-flex';
             } else {
-                // NÃO TEM VÍDEO → Mostra "Ao vivo em breve"
-                iframe.src = '';
                 badge.textContent = '🔴 Ao vivo em breve – aguarde o horário da transmissão.';
                 btnYT.style.display = 'none';
             }
-        });
+        }
+
+        // Quando o player estiver pronto
+        function onPlayerReady(event) {
+            event.target.playVideo();
+        }
+
+        // Quando o estado do player mudar (para garantir o loop)
+        function onPlayerStateChange(event) {
+            if (event.data === YT.PlayerState.ENDED) {
+                const randomStart = Math.floor(Math.random() * VIDEO_DURATION_SECONDS);
+                ytPlayer.seekTo(randomStart);
+                ytPlayer.playVideo();
+            }
+        }
     </script>
 
 </body>
