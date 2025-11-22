@@ -238,7 +238,7 @@
             100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
         }
 
-        /* ESTILOS DA SEÇÃO AO VIVO */
+        /* ESTILOS DA SEÇÃO AO VIVO UNIFICADA */
         .live-section {
             padding: 60px 20px;
             background: linear-gradient(135deg, #050816 0%, #0f172a 100%);
@@ -248,19 +248,37 @@
         .live-section .container {
             max-width: 1000px;
             margin: 0 auto;
-            text-align: center;
         }
 
         .live-section h2 {
-            font-size: 2rem;
-            margin-bottom: 10px;
+            font-size: 2.5rem;
+            margin-bottom: 15px;
             color: #e5e7eb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .live-section h2 i {
+            font-size: 3rem;
+            color: #ef4444; /* Vermelho do YouTube */
         }
 
         .live-subtitle {
-            font-size: 0.98rem;
+            font-size: 1.1rem;
             color: #d1d5db;
-            margin-bottom: 20px;
+            margin-bottom: 16px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+        }
+
+        .live-top-actions {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 24px;
         }
 
         .live-status-badge {
@@ -273,9 +291,10 @@
             font-size: 0.9rem;
             margin-bottom: 24px;
             border: 1px solid rgba(248, 113, 113, 0.4);
+            animation: pulse 2s infinite;
+            text-align: center;
         }
 
-        /* RESPONSIVO – VÍDEO 16:9 */
         .live-video-wrapper {
             display: flex;
             justify-content: center;
@@ -306,72 +325,80 @@
             height: 100%;
         }
 
-        /* BOTÕES */
         .live-actions {
             display: flex;
             flex-wrap: wrap;
-            gap: 12px;
+            gap: 15px;
             justify-content: center;
+            margin-top: 25px;
             margin-bottom: 10px;
         }
 
         .btn {
-            padding: 10px 18px;
+            padding: 12px 25px;
             border-radius: 999px;
-            font-size: 0.95rem;
+            font-size: 1rem;
             font-weight: 600;
             border: none;
             cursor: pointer;
             transition: all 0.2s ease;
             text-decoration: none;
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .btn-live-primary {
-            background: linear-gradient(135deg, #22c55e, #4ade80);
-            color: #052e16;
-            box-shadow: 0 10px 25px rgba(34, 197, 94, 0.35);
+            background: linear-gradient(135deg, #ef4444, #dc2626); /* Vermelho mais forte */
+            color: #ffffff;
+            box-shadow: 0 10px 25px rgba(239, 68, 68, 0.35);
         }
 
         .btn-live-primary:hover {
-            transform: translateY(-1px) scale(1.01);
-            box-shadow: 0 12px 28px rgba(34, 197, 94, 0.5);
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 12px 28px rgba(239, 68, 68, 0.5);
         }
 
-        .btn-outline {
+        .btn-outline-light {
             background: transparent;
             color: #e5e7eb;
             border: 1px solid rgba(148, 163, 184, 0.7);
         }
 
-        .btn-outline:hover {
+        .btn-outline-light:hover {
             background: rgba(15, 23, 42, 0.8);
+            border-color: #e5e7eb;
         }
 
-        /* NOTA FINAL */
         .live-note {
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             color: #9ca3af;
-            margin-top: 8px;
+            margin-top: 20px;
+            text-align: center;
         }
 
-        /* MOBILE */
         @media (max-width: 640px) {
-            .live-section {
-                padding: 40px 16px;
-            }
-
             .live-section h2 {
-                font-size: 1.4rem;
+                font-size: 1.8rem;
+                gap: 10px;
             }
-
+            .live-section h2 i {
+                font-size: 2.2rem;
+            }
             .live-subtitle {
-                font-size: 0.9rem;
+                font-size: 0.95rem;
             }
-
             .btn {
                 width: 100%;
                 justify-content: center;
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+            .live-actions {
+                flex-direction: column;
+            }
+            .live-top-actions {
+                flex-direction: column;
             }
         }
     </style>
@@ -381,12 +408,11 @@
     <script>
         const LOGO_BAND_URL = "https://upload.wikimedia.org/wikipedia/commons/f/f0/Band_logo_2018.png";
         const AIR_FRYER_URL = "https://gazin-images.gazin.com.br/FvUHVP2VyngzEi0HUgXjMkudEHg=/1920x/filters:format(webp):quality(75)/https://gazin-marketplace.s3.amazonaws.com/midias/imagens/2024/11/fritadeira-eletrica-air-fryer-mondial-pratic-af-36-36l-1500w-162411030410.jpg";
-        const LIVE_STREAM_URL = "https://link-da-transmissao-ao-vivo-aqui.com/sipat";
         
         // COLOQUE AQUI O ID DO SEU VÍDEO DO YOUTUBE
         // Exemplo: se o link for https://www.youtube.com/watch?v=ABC123XYZ
         // então coloque apenas: ABC123XYZ
-        const YOUTUBE_VIDEO_ID = "SEU_VIDEO_ID_AQUI";
+        const YOUTUBE_VIDEO_ID = "SEU_VIDEO_ID_AQUI"; // <-- TROQUE AQUI PELO ID DA SUA LIVE
     </script>
 
     <!-- Cabeçalho -->
@@ -429,53 +455,32 @@
         </div>
     </section>
     
-    <!-- Transmissão Ao Vivo -->
-    <section id="transmissao" class="py-12 bg-gradient-to-r from-yellow-50 to-yellow-100 border-b-4 border-yellow-400">
-        <div class="container mx-auto px-4 text-center">
-            <h2 class="text-3xl font-extrabold text-gray-800 mb-4 flex items-center justify-center animate-fadeInUp">
-                <i class="fas fa-video text-red-600 text-4xl mr-3 icon-bounce"></i>
-                Acompanhe a Transmissão Ao Vivo!
-            </h2>
-            <p class="text-xl text-gray-700 mb-6 max-w-3xl mx-auto animate-fadeInUp">
-                Para quem não puder estar presencialmente, as palestras dos dias <strong>25, 26 e 28</strong> serão transmitidas online.
-            </p>
-            <a id="live-link" href="#" target="_blank" class="btn-primary inline-block bg-red-600 hover:bg-red-700 text-white font-extrabold text-lg py-4 px-8 rounded-lg shadow-xl uppercase tracking-wider transition duration-300 transform hover:scale-105 animate-fadeInUp">
-                <span class="badge-live">
-                    <span class="relative flex h-3 w-3">
-                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
-                        <span class="relative inline-flex rounded-full h-3 w-3 bg-white"></span>
-                    </span>
-                    LIVE
-                </span>
-                Acessar o Link da Transmissão
-            </a>
-            <p class="text-sm text-gray-600 mt-3 animate-fadeInUp">
-                <i class="fas fa-info-circle mr-1"></i>
-                O link será o mesmo para todos os dias de transmissão (disponível nos dias 25, 26 e 28/Nov).
-            </p>
-        </div>
-        <script>
-            document.getElementById('live-link').href = LIVE_STREAM_URL;
-        </script>
-    </section>
-
-    <!-- SEÇÃO TRANSMISSÃO AO VIVO EMBUTIDA -->
+    <!-- SEÇÃO TRANSMISSÃO AO VIVO UNIFICADA -->
     <section id="ao-vivo" class="live-section">
         <div class="container">
-            <h2>📺 Transmissão ao Vivo – SIPAT 2025</h2>
-            <p class="live-subtitle">
-                Acompanhe a SIPAT 2025 ao vivo diretamente nesta página!  
+            <h2 class="animate-fadeInUp">
+                <i class="fab fa-youtube"></i> Transmissão Ao Vivo – SIPAT 2025
+            </h2>
+            <p class="live-subtitle animate-fadeInUp">
+                Acompanhe as palestras dos dias <strong>25, 26 e 28 de Novembro</strong> ao vivo diretamente nesta página!
                 Clique em <strong>Play</strong> no player abaixo no horário da transmissão.
             </p>
 
+            <!-- Botão IR PARA O PLAYER aqui em cima -->
+            <div class="live-top-actions animate-fadeInUp" style="animation-delay: 0.1s;">
+                <button type="button" class="btn btn-outline-light" onclick="scrollToLivePlayer()">
+                    <i class="fas fa-play-circle"></i> Ir para o player
+                </button>
+            </div>
+
             <!-- ALERTA DE STATUS DA LIVE -->
-            <div class="live-status-badge" id="live-status-badge">
+            <div class="live-status-badge animate-fadeInUp" id="live-status-badge" style="animation-delay: 0.2s;">
                 🔴 Ao vivo em breve – aguarde o horário da transmissão.
             </div>
 
             <!-- PLAYER DO YOUTUBE EMBUTIDO -->
-            <div class="live-video-wrapper">
-                <div class="live-video-container">
+            <div class="live-video-wrapper animate-fadeInUp" style="animation-delay: 0.3s;">
+                <div class="live-video-container" id="live-player">
                     <iframe
                         id="live-iframe"
                         src=""
@@ -487,23 +492,21 @@
                 </div>
             </div>
 
-            <!-- BOTÕES DE AÇÃO -->
-            <div class="live-actions">
+            <!-- BOTÕES DE AÇÃO (AGORA SÓ O ABRIR NO YOUTUBE) -->
+            <div class="live-actions animate-fadeInUp" style="animation-delay: 0.4s;">
                 <a
                     id="btn-open-youtube"
                     href=""
                     target="_blank"
                     rel="noopener"
-                    class="btn btn-outline">
-                    <i class="fab fa-youtube mr-2"></i>Abrir transmissão no YouTube
+                    class="btn btn-live-primary">
+                    <i class="fab fa-youtube"></i> Abrir no YouTube
                 </a>
-                <button type="button" class="btn btn-live-primary" onclick="scrollToLive()">
-                    <i class="fas fa-play-circle mr-2"></i>Ir para o player
-                </button>
             </div>
 
-            <p class="live-note">
-                💡 Dica: use fones de ouvido e, se possível, conecte-se a uma rede Wi‑Fi para melhor qualidade de áudio e vídeo.
+            <p class="live-note animate-fadeInUp" style="animation-delay: 0.5s;">
+                <i class="fas fa-info-circle"></i> O link será o mesmo para todos os dias de transmissão (disponível nos dias 25, 26 e 28/Nov).
+                Dica: use fones de ouvido e, se possível, conecte-se a uma rede Wi‑Fi para melhor qualidade de áudio e vídeo.
             </p>
         </div>
     </section>
@@ -649,7 +652,7 @@
                     <i class="fas fa-calendar-alt text-green-600 mr-3"></i>
                     Agenda Completa da SIPAT 2025
                 </h2>
-                <p class="text-lg text-gray-600 animate-fadeInUp">Confira toda a programação da semana</p>
+            <p class="text-lg text-gray-600 animate-fadeInUp">Confira toda a programação da semana</p>
             </div>
 
             <div class="overflow-x-auto shadow-2xl rounded-2xl animate-fadeInUp">
@@ -762,7 +765,7 @@
             <div class="mb-4">
                 <i class="fas fa-shield-alt text-4xl text-green-400 mb-3 inline-block"></i>
             </div>
-            <p class="text-lg font-semibold">© 2025 SIPAT Band Campinas</p>
+            <p class="text-lg font-semibold">&copy; 2025 SIPAT Band Campinas</p>
             <p class="text-sm mt-2 text-gray-400">Realização: CIPA e Segurança do Trabalho</p>
             <p class="text-lg mt-4 text-yellow-400 font-bold">
                 <i class="fas fa-heart text-red-500 mr-2"></i>
@@ -774,16 +777,18 @@
     <!-- SCRIPTS -->
     <script>
         // Função para rolar suavemente até o player
-        function scrollToLive() {
-            const section = document.getElementById('ao-vivo');
-            if (section) {
-                section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        function scrollToLivePlayer() {
+            const player = document.getElementById('live-player');
+            if (player) {
+                player.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
         }
 
         // Configurar os links do YouTube quando a página carregar
         window.addEventListener('DOMContentLoaded', function() {
             const videoId = YOUTUBE_VIDEO_ID;
+            if (!videoId || videoId === "SEU_VIDEO_ID_AQUI") return;
+
             const embedUrl = `https://www.youtube.com/embed/${videoId}`;
             const watchUrl = `https://www.youtube.com/watch?v=${videoId}`;
             
