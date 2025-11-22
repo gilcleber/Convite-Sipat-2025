@@ -211,6 +211,14 @@
             animation: pulse 2s infinite;
             text-align: center;
         }
+        
+        /* Badge VERDE para AO VIVO */
+        .live-status-badge.is-live {
+            background: rgba(34, 197, 94, 0.15);
+            color: #86efac;
+            border: 1px solid rgba(134, 239, 172, 0.5);
+        }
+        
         .live-video-wrapper {
             display: flex;
             justify-content: center;
@@ -322,10 +330,16 @@
     <!-- ============================================ -->
     <script>
         // 🔴 TROQUE AQUI PELO ID DO SEU VÍDEO OU LIVE
-        // AGORA: Vídeo em loop (7EJ-iJNOAvI)
+        // VÍDEO INSTITUCIONAL: 7EJ-iJNOAvI
         // QUANDO FOR LIVE: Troque pelo ID da live
         
         const YOUTUBE_VIDEO_ID = 'HU_s5jAsIEE'; // <-- TROQUE AQUI
+        
+        // 📋 LISTA DE IDs DE VÍDEOS EDUCATIVOS (adicione aqui os IDs dos vídeos institucionais)
+        const EDUCATIONAL_VIDEO_IDS = [
+            '7EJ-iJNOAvI',  // Vídeo educativo principal
+            // Adicione mais IDs aqui se tiver outros vídeos educativos
+        ];
     </script>
     <!-- ============================================ -->
 
@@ -380,9 +394,9 @@
     <section id="ao-vivo" class="live-section">
         <div class="container">
             <h2 class="animate-fadeInUp">
-                <i class="fab fa-youtube"></i> Vídeos Educativos – SIPAT 2025
+                <i class="fab fa-youtube"></i> <span id="live-title">Vídeos Educativos – SIPAT 2025</span>
             </h2>
-            <p class="live-subtitle animate-fadeInUp">
+            <p class="live-subtitle animate-fadeInUp" id="live-subtitle">
                 Assista aos vídeos educativos sobre <strong>Segurança no Trabalho</strong> rodando continuamente!<br>
                 Nos dias <strong>25, 26 e 28 de Novembro</strong>, acompanhe as palestras ao vivo neste mesmo player.
             </p>
@@ -417,7 +431,7 @@
                 </a>
             </div>
 
-            <p class="live-note animate-fadeInUp" style="animation-delay: 0.5s;">
+            <p class="live-note animate-fadeInUp" style="animation-delay: 0.5s;" id="live-note">
                 <i class="fas fa-info-circle"></i> Os vídeos estão em reprodução contínua (loop). Nos dias de transmissão ao vivo (25, 26 e 28/Nov), este player exibirá as palestras em tempo real.
             </p>
         </div>
@@ -702,18 +716,41 @@
             const iframe  = document.getElementById('live-iframe');
             const badge   = document.getElementById('live-status-badge');
             const btnYT   = document.getElementById('btn-open-youtube');
+            const liveTitle = document.getElementById('live-title');
+            const liveSubtitle = document.getElementById('live-subtitle');
+            const liveNote = document.getElementById('live-note');
 
             if (videoId && videoId !== '') {
-                // TEM VÍDEO → Configura com LOOP
-                iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}`;
-                badge.textContent = '🎬 Vídeos educativos em reprodução contínua';
+                // ✅ VERIFICA SE É UM VÍDEO EDUCATIVO OU UMA LIVE
+                const isEducationalVideo = EDUCATIONAL_VIDEO_IDS.includes(videoId);
+                
+                if (isEducationalVideo) {
+                    // 🎬 VÍDEO EDUCATIVO (com loop)
+                    iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}`;
+                    badge.textContent = '🎬 Vídeos educativos em reprodução contínua';
+                    badge.classList.remove('is-live');
+                    
+                    liveTitle.textContent = 'Vídeos Educativos – SIPAT 2025';
+                    liveSubtitle.innerHTML = 'Assista aos vídeos educativos sobre <strong>Segurança no Trabalho</strong> rodando continuamente!<br>Nos dias <strong>25, 26 e 28 de Novembro</strong>, acompanhe as palestras ao vivo neste mesmo player.';
+                    liveNote.innerHTML = '<i class="fas fa-info-circle"></i> Os vídeos estão em reprodução contínua (loop). Nos dias de transmissão ao vivo (25, 26 e 28/Nov), este player exibirá as palestras em tempo real.';
+                } else {
+                    // 🔴 TRANSMISSÃO AO VIVO (sem loop)
+                    iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1`;
+                    badge.textContent = '🔴 ESTAMOS AO VIVO AGORA!';
+                    badge.classList.add('is-live');
+                    
+                    liveTitle.textContent = 'Transmissão Ao Vivo – SIPAT 2025';
+                    liveSubtitle.innerHTML = 'Acompanhe <strong>AO VIVO</strong> as palestras da SIPAT 2025!<br>Participe e interaja conosco durante a transmissão.';
+                    liveNote.innerHTML = '<i class="fas fa-broadcast-tower"></i> Transmissão ao vivo em andamento. Aproveite para assistir e participar!';
+                }
                 
                 btnYT.href = `https://www.youtube.com/watch?v=${videoId}`;
                 btnYT.style.display = 'inline-flex';
             } else {
-                // NÃO TEM VÍDEO → Mostra "Ao vivo em breve"
+                // ⏸️ SEM VÍDEO
                 iframe.src = '';
                 badge.textContent = '🔴 Ao vivo em breve – aguarde o horário da transmissão.';
+                badge.classList.remove('is-live');
                 btnYT.style.display = 'none';
             }
         });
