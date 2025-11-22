@@ -321,12 +321,11 @@
     <!-- 🎯 COLOQUE O ID DO VÍDEO DO YOUTUBE AQUI 👇 -->
     <!-- ============================================ -->
     <script>
-        // 🔴 TROQUE AQUI PELO ID DA SUA LIVE DO YOUTUBE
-        // Exemplo: se o link for https://www.youtube.com/watch?v=CtXq3b0ta4M
-        // então coloque apenas: 'CtXq3b0ta4M'
-        // Se NÃO tiver live, deixe vazio: ''
+        // 🔴 TROQUE AQUI PELO ID DO SEU VÍDEO OU LIVE
+        // AGORA: Vídeo em loop (7EJ-iJNOAvI)
+        // QUANDO FOR LIVE: Troque pelo ID da live
         
-        const YOUTUBE_VIDEO_ID = ''; // <-- TROQUE AQUI OU DEIXE VAZIO ''
+        const YOUTUBE_VIDEO_ID = '7EJ-iJNOAvI'; // <-- TROQUE AQUI
     </script>
     <!-- ============================================ -->
 
@@ -381,16 +380,16 @@
     <section id="ao-vivo" class="live-section">
         <div class="container">
             <h2 class="animate-fadeInUp">
-                <i class="fab fa-youtube"></i> Transmissão Ao Vivo – SIPAT 2025
+                <i class="fab fa-youtube"></i> Vídeos Educativos – SIPAT 2025
             </h2>
             <p class="live-subtitle animate-fadeInUp">
-                Acompanhe as palestras dos dias <strong>25, 26 e 28 de Novembro</strong> ao vivo diretamente nesta página!
-                Clique em <strong>Play</strong> no player abaixo no horário da transmissão.
+                Assista aos vídeos educativos sobre <strong>Segurança no Trabalho</strong> rodando continuamente!<br>
+                Nos dias <strong>25, 26 e 28 de Novembro</strong>, acompanhe as palestras ao vivo neste mesmo player.
             </p>
 
             <div class="text-center animate-fadeInUp" style="animation-delay: 0.2s;">
                 <div class="live-status-badge" id="live-status-badge">
-                    🔴 Ao vivo em breve – aguarde o horário da transmissão.
+                    🎬 Vídeos educativos em reprodução contínua
                 </div>
             </div>
 
@@ -399,7 +398,7 @@
                     <iframe
                         id="live-iframe"
                         src=""
-                        title="Transmissão ao Vivo SIPAT 2025"
+                        title="SIPAT 2025 - Vídeos Educativos"
                         frameborder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                         allowfullscreen>
@@ -413,15 +412,13 @@
                     href="#"
                     target="_blank"
                     rel="noopener noreferrer"
-                    class="btn btn-live-primary"
-                    style="display: none;">
+                    class="btn btn-live-primary">
                     <i class="fab fa-youtube"></i> Abrir no YouTube
                 </a>
             </div>
 
             <p class="live-note animate-fadeInUp" style="animation-delay: 0.5s;">
-                <i class="fas fa-info-circle"></i> O link será o mesmo para todos os dias de transmissão (disponível nos dias 25, 26 e 28/Nov).
-                Dica: use fones de ouvido e, se possível, conecte-se a uma rede Wi‑Fi para melhor qualidade de áudio e vídeo.
+                <i class="fas fa-info-circle"></i> Os vídeos estão em reprodução contínua (loop). Nos dias de transmissão ao vivo (25, 26 e 28/Nov), este player exibirá as palestras em tempo real.
             </p>
         </div>
     </section>
@@ -707,9 +704,9 @@
             const btnYT   = document.getElementById('btn-open-youtube');
 
             if (videoId && videoId !== '') {
-                // TEM VÍDEO → Mostra "Estamos ao vivo"
-                iframe.src = `https://www.youtube.com/embed/${videoId}`;
-                badge.textContent = '🔴 Estamos ao vivo – acompanhe a transmissão.';
+                // TEM VÍDEO → Configura com LOOP
+                iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}`;
+                badge.textContent = '🎬 Vídeos educativos em reprodução contínua';
                 
                 btnYT.href = `https://www.youtube.com/watch?v=${videoId}`;
                 btnYT.style.display = 'inline-flex';
