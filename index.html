@@ -406,7 +406,7 @@
             <div class="live-actions animate-fadeInUp" style="animation-delay: 0.4s;">
                 <a
                     id="btn-open-youtube"
-                    href="#"
+                    href="https://www.youtube.com/watch?v=7EJ-iJNOAvI"
                     target="_blank"
                     rel="noopener noreferrer"
                     class="btn btn-live-primary">
@@ -713,18 +713,18 @@
                 ytPlayer = new YT.Player('player', {
                     videoId: videoId,
                     playerVars: {
-                        'autoplay': 1,
-                        'mute': 1,
+                        'autoplay': 1,              // ✅ AUTOPLAY ATIVADO
+                        'mute': 1,                  // ✅ SOM MUTADO (necessário pro autoplay)
                         'loop': 1,
                         'playlist': videoId,
                         'start': randomStart,
-                        'controls': 0,           // ❌ SEM CONTROLES
-                        'modestbranding': 1,     // ❌ SEM LOGO YOUTUBE
-                        'rel': 0,                // ❌ SEM VÍDEOS RELACIONADOS
-                        'showinfo': 0,           // ❌ SEM TÍTULO
-                        'iv_load_policy': 3,     // ❌ SEM ANOTAÇÕES
-                        'disablekb': 1,          // ❌ SEM ATALHOS DE TECLADO
-                        'fs': 0,                 // ❌ SEM BOTÃO FULLSCREEN
+                        'controls': 0,              // ❌ SEM CONTROLES
+                        'modestbranding': 1,        // ❌ SEM LOGO YOUTUBE
+                        'rel': 0,                   // ❌ SEM VÍDEOS RELACIONADOS
+                        'showinfo': 0,              // ❌ SEM TÍTULO
+                        'iv_load_policy': 3,        // ❌ SEM ANOTAÇÕES
+                        'disablekb': 1,             // ❌ SEM ATALHOS DE TECLADO
+                        'fs': 0,                    // ❌ SEM BOTÃO FULLSCREEN
                         'playsinline': 1
                     },
                     events: {
@@ -734,6 +734,8 @@
                 });
 
                 badge.textContent = '🎬 Vídeos educativos em reprodução contínua';
+                
+                // ✅ CORRIGIDO: Link direto pro YouTube
                 btnYT.href = `https://www.youtube.com/watch?v=${videoId}`;
                 btnYT.style.display = 'inline-flex';
             } else {
@@ -744,6 +746,7 @@
 
         // Quando o player estiver pronto
         function onPlayerReady(event) {
+            // ✅ FORÇA O PLAY QUANDO CARREGAR
             event.target.playVideo();
         }
 
