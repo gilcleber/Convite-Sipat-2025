@@ -84,7 +84,7 @@
             max-width: 220px;
             height: auto;
             margin: 0 auto;
-            object-fit: cover;
+            object-fit: contain;
             border-radius: 1rem;
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
             background-color: #ffffff;
@@ -94,7 +94,11 @@
         }
         .air-fryer-image:hover { transform: scale(1.05) rotate(2deg); }
 
-        .sipat-table { border-collapse: separate; border-spacing: 0; }
+        .sipat-table { 
+            border-collapse: separate; 
+            border-spacing: 0;
+            width: 100%;
+        }
         .sipat-table th, .sipat-table td {
             padding: 1.25rem;
             text-align: left;
@@ -139,14 +143,6 @@
         html { scroll-behavior: smooth; }
         .icon-bounce { display: inline-block; animation: float 2s ease-in-out infinite; }
 
-        @media (max-width: 768px) {
-            .sipat-table th, .sipat-table td {
-                padding: 0.75rem;
-                font-size: 0.875rem;
-            }
-            .prize-card { margin-bottom: 1rem; }
-        }
-
         .shine {
             position: relative;
             overflow: hidden;
@@ -184,6 +180,7 @@
             align-items: center;
             justify-content: center;
             gap: 15px;
+            flex-wrap: wrap;
         }
         .live-section h2 i {
             font-size: 3rem;
@@ -223,6 +220,7 @@
             display: flex;
             justify-content: center;
             margin-bottom: 20px;
+            width: 100%;
         }
         .live-video-container {
             position: relative;
@@ -283,6 +281,7 @@
             color: #9ca3af;
             margin-top: 20px;
             text-align: center;
+            padding: 0 15px;
         }
 
         /* Botão IR PARA PLAYER no header */
@@ -305,20 +304,91 @@
             transform: scale(1.05);
         }
 
+        /* RESPONSIVIDADE MOBILE */
+        @media (max-width: 768px) {
+            .sipat-table {
+                font-size: 0.75rem;
+            }
+            .sipat-table th, .sipat-table td {
+                padding: 0.5rem;
+                font-size: 0.75rem;
+            }
+            .prize-card { 
+                margin-bottom: 1rem;
+            }
+            .air-fryer-image {
+                max-width: 150px;
+                padding: 0.5rem;
+            }
+            /* Ajuste dos cards de prêmios */
+            .prize-card h3 {
+                font-size: 1.25rem;
+            }
+            .prize-card ul li {
+                font-size: 0.875rem;
+                padding: 0.5rem;
+            }
+        }
+
         @media (max-width: 640px) {
-            .live-section h2 { font-size: 1.8rem; gap: 10px; }
-            .live-section h2 i { font-size: 2.2rem; }
-            .live-subtitle { font-size: 0.95rem; }
+            .live-section h2 { 
+                font-size: 1.5rem; 
+                gap: 10px;
+                text-align: center;
+            }
+            .live-section h2 i { 
+                font-size: 2rem; 
+            }
+            .live-subtitle { 
+                font-size: 0.9rem;
+                padding: 0 10px;
+            }
+            .live-status-badge {
+                font-size: 0.85rem;
+                padding: 8px 15px;
+            }
             .btn {
                 width: 100%;
                 justify-content: center;
                 padding: 10px 20px;
                 font-size: 0.9rem;
             }
-            .live-actions { flex-direction: column; }
+            .live-actions { 
+                flex-direction: column;
+                padding: 0 15px;
+            }
             .btn-header-player {
-                font-size: 0.75rem;
+                font-size: 0.7rem;
                 padding: 0.4rem 0.8rem;
+            }
+            /* Hero responsivo */
+            .hero-gradient h2 {
+                font-size: 2rem;
+            }
+            .hero-gradient p {
+                font-size: 0.95rem;
+            }
+            /* Tabela responsiva */
+            .sipat-table th:nth-child(3),
+            .sipat-table td:nth-child(3) {
+                display: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .live-section h2 {
+                font-size: 1.25rem;
+            }
+            .live-section h2 i {
+                font-size: 1.5rem;
+            }
+            .hero-gradient h2 {
+                font-size: 1.75rem;
+            }
+            /* Esconde colunas menos importantes na tabela */
+            .sipat-table th:nth-child(5),
+            .sipat-table td:nth-child(5) {
+                display: none;
             }
         }
     </style>
@@ -333,7 +403,7 @@
         // VÍDEO INSTITUCIONAL: 7EJ-iJNOAvI
         // QUANDO FOR LIVE: Troque pelo ID da live
         
-        const YOUTUBE_VIDEO_ID = 'e3aKyAot8Ko'; // <-- TROQUE AQUI
+        const YOUTUBE_VIDEO_ID = 'HU_s5jAsIEE'; // <-- TROQUE AQUI
         
         // 📋 LISTA DE IDs DE VÍDEOS EDUCATIVOS (adicione aqui os IDs dos vídeos institucionais)
         const EDUCATIONAL_VIDEO_IDS = [
@@ -358,13 +428,13 @@
                 SIPAT 2025
             </h1>
             
-            <div class="flex items-center gap-3 animate-fadeInUp">
+            <div class="flex items-center gap-2 sm:gap-3 animate-fadeInUp">
                 <button onclick="scrollToLivePlayer()" class="btn-header-player">
                     <i class="fas fa-play-circle"></i>
                     <span class="hidden sm:inline">IR PARA PLAYER</span>
                     <span class="sm:hidden">PLAYER</span>
                 </button>
-                <a href="#agenda" class="btn-primary bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-bold py-2 px-6 rounded-lg shadow-md transition duration-300 transform hover:scale-105">
+                <a href="#agenda" class="btn-primary bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-bold py-2 px-4 sm:px-6 rounded-lg shadow-md transition duration-300 transform hover:scale-105 text-sm sm:text-base">
                     Ver Agenda
                 </a>
             </div>
@@ -372,18 +442,18 @@
     </header>
 
     <!-- Hero -->
-    <section class="text-white py-20 hero-gradient">
+    <section class="text-white py-12 sm:py-20 hero-gradient">
         <div class="container mx-auto px-4 text-center">
-            <p class="text-xl md:text-2xl font-semibold mb-3 animate-fadeInUp opacity-90">
+            <p class="text-lg sm:text-xl md:text-2xl font-semibold mb-3 animate-fadeInUp opacity-90">
                 Semana Interna de Prevenção de Acidentes de Trabalho
             </p>
-            <h2 class="text-4xl md:text-6xl font-extrabold mb-4 leading-tight animate-fadeInUp" style="animation-delay: 0.2s;">
+            <h2 class="text-3xl sm:text-4xl md:text-6xl font-extrabold mb-4 leading-tight animate-fadeInUp" style="animation-delay: 0.2s;">
                 SIPAT BAND CAMPINAS 2025
             </h2>
-            <p class="text-lg md:text-xl mb-8 max-w-2xl mx-auto animate-fadeInUp opacity-90" style="animation-delay: 0.4s;">
+            <p class="text-base sm:text-lg md:text-xl mb-8 max-w-2xl mx-auto animate-fadeInUp opacity-90" style="animation-delay: 0.4s;">
                 De 24 a 28 de Novembro. Participe e garanta um ambiente de trabalho e vida mais seguros!
             </p>
-            <a href="#agenda" class="btn-primary inline-block bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-extrabold text-lg py-4 px-10 rounded-full shadow-2xl uppercase tracking-wider transition duration-300 transform hover:scale-110 animate-fadeInUp" style="animation-delay: 0.6s;">
+            <a href="#agenda" class="btn-primary inline-block bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-extrabold text-base sm:text-lg py-3 sm:py-4 px-6 sm:px-10 rounded-full shadow-2xl uppercase tracking-wider transition duration-300 transform hover:scale-110 animate-fadeInUp" style="animation-delay: 0.6s;">
                 <i class="fas fa-calendar-check mr-2"></i>
                 Não Perca! Veja a Programação
             </a>
@@ -438,93 +508,93 @@
     </section>
 
     <!-- Prêmios -->
-    <section id="premios" class="py-20 bg-gradient-to-br from-gray-800 to-gray-900">
+    <section id="premios" class="py-12 sm:py-20 bg-gradient-to-br from-gray-800 to-gray-900">
         <div class="container mx-auto px-4">
-            <div class="text-center mb-12">
-                <h2 class="text-4xl font-extrabold text-white mb-3 animate-fadeInUp">
+            <div class="text-center mb-8 sm:mb-12">
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-white mb-3 animate-fadeInUp">
                     <i class="fas fa-gift text-yellow-400 mr-3"></i>
                     Sorteio de Prêmios
                 </h2>
-                <p class="text-xl text-gray-300 animate-fadeInUp">Participe e Concorra a Prêmios Incríveis!</p>
+                <p class="text-lg sm:text-xl text-gray-300 animate-fadeInUp">Participe e Concorra a Prêmios Incríveis!</p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 mb-8 sm:mb-12">
                 
                 <!-- Prêmios Diários -->
-                <div class="bg-white p-8 rounded-2xl shadow-2xl prize-card border-4 border-yellow-400 animate-fadeInUp">
+                <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-2xl prize-card border-4 border-yellow-400 animate-fadeInUp">
                     <div class="text-center mb-4">
-                        <i class="fas fa-star text-yellow-500 text-5xl icon-bounce"></i>
+                        <i class="fas fa-star text-yellow-500 text-4xl sm:text-5xl icon-bounce"></i>
                     </div>
-                    <h3 class="text-2xl font-bold text-gray-800 mb-4 text-center border-b-2 border-yellow-400 pb-3">
+                    <h3 class="text-xl sm:text-2xl font-bold text-gray-800 mb-4 text-center border-b-2 border-yellow-400 pb-3">
                         Prêmios Diários
                     </h3>
-                    <p class="text-center text-sm bg-yellow-100 text-yellow-800 font-bold py-2 px-3 rounded-lg mb-4">
+                    <p class="text-center text-xs sm:text-sm bg-yellow-100 text-yellow-800 font-bold py-2 px-3 rounded-lg mb-4">
                         <i class="fas fa-users mr-2"></i>PRESENCIAL
                     </p>
-                    <p class="text-lg font-semibold mb-3 text-gray-700 text-center">
+                    <p class="text-base sm:text-lg font-semibold mb-3 text-gray-700 text-center">
                         Concorra nos dias 25, 26 e 28 de Novembro!
                     </p>
-                    <p class="text-sm font-medium text-gray-600 mb-4 text-center">Serão sorteados:</p>
-                    <ul class="space-y-3 text-gray-700">
-                        <li class="flex items-center font-medium text-base bg-gray-50 p-3 rounded-lg hover:bg-gray-100 transition">
-                            <i class="fas fa-star text-yellow-500 text-xl mr-3 w-6 text-center"></i> 
+                    <p class="text-xs sm:text-sm font-medium text-gray-600 mb-4 text-center">Serão sorteados:</p>
+                    <ul class="space-y-2 sm:space-y-3 text-gray-700">
+                        <li class="flex items-center font-medium text-sm sm:text-base bg-gray-50 p-2 sm:p-3 rounded-lg hover:bg-gray-100 transition">
+                            <i class="fas fa-star text-yellow-500 text-lg sm:text-xl mr-2 sm:mr-3 w-5 sm:w-6 text-center"></i> 
                             <span>Convites HOPI HARI</span>
                         </li>
-                        <li class="flex items-center font-medium text-base bg-gray-50 p-3 rounded-lg hover:bg-gray-100 transition">
-                            <i class="fas fa-film text-yellow-500 text-xl mr-3 w-6 text-center"></i> 
+                        <li class="flex items-center font-medium text-sm sm:text-base bg-gray-50 p-2 sm:p-3 rounded-lg hover:bg-gray-100 transition">
+                            <i class="fas fa-film text-yellow-500 text-lg sm:text-xl mr-2 sm:mr-3 w-5 sm:w-6 text-center"></i> 
                             <span>Convites CINEMA</span>
                         </li>
-                        <li class="flex items-center font-medium text-base bg-gray-50 p-3 rounded-lg hover:bg-gray-100 transition">
-                            <i class="fas fa-hamburger text-yellow-500 text-xl mr-3 w-6 text-center"></i> 
+                        <li class="flex items-center font-medium text-sm sm:text-base bg-gray-50 p-2 sm:p-3 rounded-lg hover:bg-gray-100 transition">
+                            <i class="fas fa-hamburger text-yellow-500 text-lg sm:text-xl mr-2 sm:mr-3 w-5 sm:w-6 text-center"></i> 
                             <span>Vouchers R$200 GIOVANETTI</span>
                         </li>
-                        <li class="flex items-center font-medium text-base bg-gray-50 p-3 rounded-lg hover:bg-gray-100 transition">
-                            <i class="fas fa-water text-yellow-500 text-xl mr-3 w-6 text-center"></i> 
+                        <li class="flex items-center font-medium text-sm sm:text-base bg-gray-50 p-2 sm:p-3 rounded-lg hover:bg-gray-100 transition">
+                            <i class="fas fa-water text-yellow-500 text-lg sm:text-xl mr-2 sm:mr-3 w-5 sm:w-6 text-center"></i> 
                             <span>Convites THERMAS</span>
                         </li>
                     </ul>
                 </div>
 
                 <!-- GRANDE PRÊMIO -->
-                <div class="bg-gradient-to-br from-yellow-400 to-yellow-500 p-8 rounded-2xl shadow-2xl text-center border-4 border-white flex flex-col items-center justify-center transform md:scale-110 shine animate-fadeInUp" style="animation-delay: 0.2s;">
+                <div class="bg-gradient-to-br from-yellow-400 to-yellow-500 p-6 sm:p-8 rounded-2xl shadow-2xl text-center border-4 border-white flex flex-col items-center justify-center transform md:scale-110 shine animate-fadeInUp" style="animation-delay: 0.2s;">
                     <div class="mb-3">
-                        <i class="fas fa-trophy text-6xl text-red-700 animate-float"></i>
+                        <i class="fas fa-trophy text-5xl sm:text-6xl text-red-700 animate-float"></i>
                     </div>
-                    <h3 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4 leading-tight">
+                    <h3 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-gray-900 mb-4 leading-tight">
                         GRANDE PRÊMIO FINAL!
                     </h3>
-                    <p class="text-lg font-semibold text-gray-800 mb-4">
+                    <p class="text-base sm:text-lg font-semibold text-gray-800 mb-4">
                         Para quem participar de <span class="text-red-700 font-extrabold">TODOS OS DIAS</span> no presencial:
                     </p>
                     
                     <img src="https://gazin-images.gazin.com.br/FvUHVP2VyngzEi0HUgXjMkudEHg=/1920x/filters:format(webp):quality(75)/https://gazin-marketplace.s3.amazonaws.com/midias/imagens/2024/11/fritadeira-eletrica-air-fryer-mondial-pratic-af-36-36l-1500w-162411030410.jpg" 
                          alt="Air Fryer Mondial" 
                          onerror="this.onerror=null; this.src='https://placehold.co/200x200/cccccc/333333?text=Air+Fryer+Mondial';"
-                         class="air-fryer-image my-6 animate-float">
+                         class="air-fryer-image my-4 sm:my-6 animate-float">
                     
-                    <p class="text-4xl md:text-5xl font-extrabold text-red-700 animate-pulse">
+                    <p class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-red-700 animate-pulse">
                         AIR FRYER MONDIAL
                     </p>
-                    <p class="text-sm text-gray-800 mt-3 font-semibold">
+                    <p class="text-xs sm:text-sm text-gray-800 mt-3 font-semibold">
                         <i class="fas fa-check-circle mr-1"></i>
                         Presença obrigatória: 25, 26 e 28/Nov
                     </p>
                 </div>
 
                 <!-- Conteúdo Online -->
-                <div class="bg-gradient-to-br from-blue-50 to-blue-100 p-8 rounded-2xl shadow-2xl prize-card border-4 border-blue-300 flex items-center justify-center text-center animate-fadeInUp" style="animation-delay: 0.4s;">
+                <div class="bg-gradient-to-br from-blue-50 to-blue-100 p-6 sm:p-8 rounded-2xl shadow-2xl prize-card border-4 border-blue-300 flex items-center justify-center text-center animate-fadeInUp" style="animation-delay: 0.4s;">
                     <div>
                         <div class="mb-4">
-                            <i class="fas fa-book-reader text-5xl text-blue-600 icon-bounce"></i>
+                            <i class="fas fa-book-reader text-4xl sm:text-5xl text-blue-600 icon-bounce"></i>
                         </div>
-                        <h3 class="text-2xl font-bold text-blue-800 mb-4">
+                        <h3 class="text-xl sm:text-2xl font-bold text-blue-800 mb-4">
                             Conteúdo de Leitura Online
                         </h3>
-                        <p class="text-blue-700 text-lg mb-4">
+                        <p class="text-blue-700 text-base sm:text-lg mb-4">
                             Nos dias <strong>24 e 27</strong>, material informativo digital (PDF) sobre temas cruciais para sua segurança e bem-estar.
                         </p>
-                        <div class="bg-white p-4 rounded-lg shadow-inner mb-4">
-                            <ul class="space-y-2 text-blue-700 text-base font-medium">
+                        <div class="bg-white p-3 sm:p-4 rounded-lg shadow-inner mb-4">
+                            <ul class="space-y-2 text-blue-700 text-sm sm:text-base font-medium">
                                 <li class="flex items-center justify-start">
                                     <i class="fas fa-home text-blue-500 mr-2"></i>
                                     <span>Segurança Doméstica (24/Nov)</span>
@@ -535,7 +605,7 @@
                                 </li>
                             </ul>
                         </div>
-                        <p class="text-blue-600 text-sm font-semibold">
+                        <p class="text-blue-600 text-xs sm:text-sm font-semibold">
                             <i class="fas fa-envelope mr-1"></i>
                             Disponível no seu e-mail corporativo
                         </p>
@@ -545,22 +615,22 @@
             </div>
 
             <!-- Card Especial: Sorteio Quiropraxia -->
-            <div class="max-w-4xl mx-auto mt-8">
-                <div class="bg-gradient-to-r from-purple-500 to-indigo-600 p-8 rounded-2xl shadow-2xl border-4 border-white text-center animate-fadeInUp shine">
+            <div class="max-w-4xl mx-auto mt-6 sm:mt-8">
+                <div class="bg-gradient-to-r from-purple-500 to-indigo-600 p-6 sm:p-8 rounded-2xl shadow-2xl border-4 border-white text-center animate-fadeInUp shine">
                     <div class="flex items-center justify-center mb-4">
-                        <i class="fas fa-spa text-6xl text-white animate-float"></i>
+                        <i class="fas fa-spa text-5xl sm:text-6xl text-white animate-float"></i>
                     </div>
-                    <h3 class="text-3xl md:text-4xl font-extrabold text-white mb-4">
+                    <h3 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white mb-4">
                         🎁 SORTEIO ESPECIAL DIA 28/NOV
                     </h3>
-                    <p class="text-2xl font-bold text-yellow-300 mb-3">
+                    <p class="text-xl sm:text-2xl font-bold text-yellow-300 mb-3">
                         SESSÕES DE QUIROPRAXIA
                     </p>
-                    <p class="text-xl text-white mb-4">
+                    <p class="text-lg sm:text-xl text-white mb-4">
                         com o Profissional <strong class="text-yellow-300">KADU MIRANDA</strong>
                     </p>
                     <div class="bg-white bg-opacity-20 rounded-lg p-4 inline-block">
-                        <p class="text-white font-semibold">
+                        <p class="text-white font-semibold text-sm sm:text-base">
                             <i class="fas fa-calendar-check mr-2"></i>
                             Sorteio realizado no encerramento da SIPAT
                         </p>
@@ -571,14 +641,14 @@
     </section>
 
     <!-- Agenda -->
-    <section id="agenda" class="py-20 bg-gradient-to-b from-white to-gray-50">
+    <section id="agenda" class="py-12 sm:py-20 bg-gradient-to-b from-white to-gray-50">
         <div class="container mx-auto px-4">
-            <div class="text-center mb-12">
-                <h2 class="text-4xl font-extrabold text-gray-800 mb-3 animate-fadeInUp">
+            <div class="text-center mb-8 sm:mb-12">
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-gray-800 mb-3 animate-fadeInUp">
                     <i class="fas fa-calendar-alt text-green-600 mr-3"></i>
                     Agenda Completa da SIPAT 2025
                 </h2>
-                <p class="text-lg text-gray-600 animate-fadeInUp">Confira toda a programação da semana</p>
+                <p class="text-base sm:text-lg text-gray-600 animate-fadeInUp">Confira toda a programação da semana</p>
             </div>
 
             <div class="overflow-x-auto shadow-2xl rounded-2xl animate-fadeInUp">
@@ -589,96 +659,96 @@
                             <th>Formato</th>
                             <th>Hora</th>
                             <th>Tema</th>
-                            <th>Profissional / Tipo</th>
+                            <th>Profissional</th>
                             <th class="rounded-tr-lg">Detalhes</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td class="font-bold text-gray-800">
-                                <i class="fas fa-calendar-day text-green-600 mr-2"></i>
-                                Segunda,24/Nov
+                                <i class="fas fa-calendar-day text-green-600 mr-1 sm:mr-2"></i>
+                                <span class="hidden sm:inline">Segunda,</span>24/Nov
                             </td>
                             <td>
-                                <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold bg-blue-100 text-blue-700">
+                                <span class="inline-flex items-center px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-semibold bg-blue-100 text-blue-700">
                                     <i class="fas fa-laptop mr-1"></i>Online
                                 </span>
                             </td>
                             <td class="text-gray-600 font-medium">Todo o dia</td>
                             <td class="font-bold text-gray-800">Segurança Doméstica e Primeiros Socorros</td>
-                            <td class="font-semibold text-green-700">CIPA (Envio de Material)</td>
+                            <td class="font-semibold text-green-700">CIPA</td>
                             <td class="text-gray-700">Material sobre prevenção de acidentes no lar e dicas de emergência.</td>
                         </tr>
                         <tr>
                             <td class="font-bold text-gray-800">
-                                <i class="fas fa-calendar-day text-green-600 mr-2"></i>
-                                Terça, 25/Nov
+                                <i class="fas fa-calendar-day text-green-600 mr-1 sm:mr-2"></i>
+                                <span class="hidden sm:inline">Terça,</span> 25/Nov
                             </td>
                             <td>
-                                <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold bg-red-100 text-red-700">
+                                <span class="inline-flex items-center px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-semibold bg-red-100 text-red-700">
                                     <i class="fas fa-users mr-1"></i>Presencial
                                 </span>
                             </td>
-                            <td class="font-bold text-red-600 text-lg">10h30</td>
+                            <td class="font-bold text-red-600 text-base sm:text-lg">10h30</td>
                             <td class="font-bold text-gray-800">Assédio / Doenças</td>
                             <td class="font-semibold text-green-700">Clínica Convidada</td>
                             <td class="text-gray-700">Assédio / Doenças Sexualmente Transmissíveis.</td>
                         </tr>
                         <tr>
                             <td class="font-bold text-gray-800">
-                                <i class="fas fa-calendar-day text-green-600 mr-2"></i>
-                                Quarta, 26/Nov
+                                <i class="fas fa-calendar-day text-green-600 mr-1 sm:mr-2"></i>
+                                <span class="hidden sm:inline">Quarta,</span> 26/Nov
                             </td>
                             <td>
-                                <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold bg-red-100 text-red-700">
+                                <span class="inline-flex items-center px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-semibold bg-red-100 text-red-700">
                                     <i class="fas fa-users mr-1"></i>Presencial
                                 </span>
                             </td>
-                            <td class="font-bold text-red-600 text-lg">15h00</td>
+                            <td class="font-bold text-red-600 text-base sm:text-lg">15h00</td>
                             <td class="font-bold text-gray-800">Qualidade de Vida</td>
                             <td class="font-semibold text-green-700">DR VITOR VIEIRA</td>
                             <td class="text-gray-700">Saúde Mental.</td>
                         </tr>
                         <tr>
                             <td class="font-bold text-gray-800">
-                                <i class="fas fa-calendar-day text-green-600 mr-2"></i>
-                                Quinta, 27/Nov
+                                <i class="fas fa-calendar-day text-green-600 mr-1 sm:mr-2"></i>
+                                <span class="hidden sm:inline">Quinta,</span> 27/Nov
                             </td>
                             <td>
-                                <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold bg-blue-100 text-blue-700">
+                                <span class="inline-flex items-center px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-semibold bg-blue-100 text-blue-700">
                                     <i class="fas fa-laptop mr-1"></i>Online
                                 </span>
                             </td>
                             <td class="text-gray-600 font-medium">Todo o dia</td>
                             <td class="font-bold text-gray-800">Bem-Estar Financeiro e Saúde Ocupacional</td>
-                            <td class="font-semibold text-green-700">CIPA (Envio de Material)</td>
+                            <td class="font-semibold text-green-700">CIPA</td>
                             <td class="text-gray-700">Material sobre como a gestão financeira afeta a saúde no trabalho.</td>
                         </tr>
                         <tr>
                             <td class="font-bold text-gray-800">
-                                <i class="fas fa-calendar-day text-green-600 mr-2"></i>
-                                Sexta, 28/Nov
+                                <i class="fas fa-calendar-day text-green-600 mr-1 sm:mr-2"></i>
+                                <span class="hidden sm:inline">Sexta,</span> 28/Nov
                             </td>
                             <td>
-                                <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold bg-red-100 text-red-700">
+                                <span class="inline-flex items-center px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-semibold bg-red-100 text-red-700">
                                     <i class="fas fa-users mr-1"></i>Presencial
                                 </span>
                             </td>
-                            <td class="font-bold text-red-600 text-lg">14h30</td>
+                            <td class="font-bold text-red-600 text-base sm:text-lg">14h30</td>
                             <td class="font-bold text-gray-800">Postura no Trabalho e Encerramento</td>
                             <td class="font-semibold text-green-700">DR KADU MIRANDA</td>
-                            <td class="text-gray-700">Ergonomia, Encerramento e o <strong class="text-yellow-600">GRANDE SORTEIO FINAL!</strong><br><span class="inline-flex items-center mt-2 px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm font-bold"><i class="fas fa-spa mr-2"></i>Sorteio Especial: Sessão de Quiropraxia com Kadu</span></td>
+                            <td class="text-gray-700">Ergonomia, Encerramento e o <strong class="text-yellow-600">GRANDE SORTEIO FINAL!</strong><br><span class="inline-flex items-center mt-2 px-2 sm:px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-xs sm:text-sm font-bold"><i class="fas fa-spa mr-2"></i>Sorteio Especial: Sessão de Quiropraxia com Kadu</span></td>
                         </tr>
                     </tbody>
                 </table>
             </div>
 
-            <div class="text-center mt-12 p-8 bg-gradient-to-r from-red-50 to-red-100 rounded-2xl border-l-8 border-red-500 shadow-xl animate-fadeInUp">
-                <p class="text-2xl font-bold text-red-800 flex items-center justify-center flex-wrap gap-3">
-                    <span class="text-4xl animate-pulse">🚨</span> 
+            <div class="text-center mt-8 sm:mt-12 p-6 sm:p-8 bg-gradient-to-r from-red-50 to-red-100 rounded-2xl border-l-8 border-red-500 shadow-xl animate-fadeInUp">
+                <p class="text-xl sm:text-2xl font-bold text-red-800 flex items-center justify-center flex-wrap gap-3">
+                    <span class="text-3xl sm:text-4xl animate-pulse">🚨</span> 
                     <span>REGRAS DE PARTICIPAÇÃO:</span>
                 </p>
-                <p class="text-xl text-red-700 mt-3">
+                <p class="text-base sm:text-xl text-red-700 mt-3">
                     Para concorrer ao <strong>Prêmio Final (Air Fryer)</strong>, a participação é <strong>obrigatória nos 3 dias presenciais</strong> (25, 26 e 28 de Novembro).
                 </p>
             </div>
@@ -686,14 +756,14 @@
     </section>
 
     <!-- Rodapé -->
-    <footer class="bg-gradient-to-r from-gray-800 to-gray-900 text-white py-10">
+    <footer class="bg-gradient-to-r from-gray-800 to-gray-900 text-white py-8 sm:py-10">
         <div class="container mx-auto px-4 text-center">
             <div class="mb-4">
-                <i class="fas fa-shield-alt text-4xl text-green-400 mb-3 inline-block"></i>
+                <i class="fas fa-shield-alt text-3xl sm:text-4xl text-green-400 mb-3 inline-block"></i>
             </div>
-            <p class="text-lg font-semibold">&copy; 2025 SIPAT Band Campinas</p>
-            <p class="text-sm mt-2 text-gray-400">Realização: CIPA e Segurança do Trabalho</p>
-            <p class="text-lg mt-4 text-yellow-400 font-bold">
+            <p class="text-base sm:text-lg font-semibold">&copy; 2025 SIPAT Band Campinas</p>
+            <p class="text-xs sm:text-sm mt-2 text-gray-400">Realização: CIPA e Segurança do Trabalho</p>
+            <p class="text-base sm:text-lg mt-4 text-yellow-400 font-bold">
                 <i class="fas fa-heart text-red-500 mr-2"></i>
                 Sua segurança é o nosso maior prêmio.
             </p>
@@ -725,8 +795,8 @@
                 const isEducationalVideo = EDUCATIONAL_VIDEO_IDS.includes(videoId);
                 
                 if (isEducationalVideo) {
-                    // 🎬 VÍDEO EDUCATIVO (com loop)
-                    iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}`;
+                    // 🎬 VÍDEO EDUCATIVO (com loop e CONTROLES VISÍVEIS)
+                    iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}&controls=1`;
                     badge.textContent = '🎬 Vídeos educativos em reprodução contínua';
                     badge.classList.remove('is-live');
                     
@@ -734,14 +804,14 @@
                     liveSubtitle.innerHTML = 'Assista aos vídeos educativos sobre <strong>Segurança no Trabalho</strong> rodando continuamente!<br>Nos dias <strong>25, 26 e 28 de Novembro</strong>, acompanhe as palestras ao vivo neste mesmo player.';
                     liveNote.innerHTML = '<i class="fas fa-info-circle"></i> Os vídeos estão em reprodução contínua (loop). Nos dias de transmissão ao vivo (25, 26 e 28/Nov), este player exibirá as palestras em tempo real.';
                 } else {
-                    // 🔴 TRANSMISSÃO AO VIVO (sem loop)
-                    iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1`;
+                    // 🔴 TRANSMISSÃO AO VIVO (sem loop e COM CONTROLES VISÍVEIS)
+                    iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=0&controls=1`;
                     badge.textContent = '🔴 ESTAMOS AO VIVO AGORA!';
                     badge.classList.add('is-live');
                     
                     liveTitle.textContent = 'Transmissão Ao Vivo – SIPAT 2025';
                     liveSubtitle.innerHTML = 'Acompanhe <strong>AO VIVO</strong> as palestras da SIPAT 2025!<br>Participe e interaja conosco durante a transmissão.';
-                    liveNote.innerHTML = '<i class="fas fa-broadcast-tower"></i> Transmissão ao vivo em andamento. Aproveite para assistir e participar!';
+                    liveNote.innerHTML = '<i class="fas fa-broadcast-tower"></i> Transmissão ao vivo em andamento. Clique no player para ativar o áudio!';
                 }
                 
                 btnYT.href = `https://www.youtube.com/watch?v=${videoId}`;
